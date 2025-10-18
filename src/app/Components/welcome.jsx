@@ -6,11 +6,18 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../fireBaseDB";
 
 // Auth pieces (keep whichever you actually use)
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import AuthContainer from "./AuthContainer";
+// import SignIn from "./SignIn";
+// import SignUp from "./SignUp";
 //import Register from "./Register";
 
 import styles from "../CSS/auth.module.css";
+import layoutStyles from "../CSS/mainLayout.module.css";
+import UserContainer from "./userContainer";
+import UserPostsFeed from "./UserPostsFeed";
+import SideNavbar from "./SideNavbar";
+import CreatePost from "./CreatePost";
+import NavigationBar from "./NavigationBar";
 
 export default function welcome() {
   const [user, setUser] = useState(null);
@@ -32,53 +39,78 @@ export default function welcome() {
     }
   };
 
+  // Helper to post and refresh feed
+  const [feedKey, setFeedKey] = useState(0);
+  const handlePost = async (content) => {
+    await fetch(`/user/${user.email}/posts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content })
+    });
+    setFeedKey(k => k + 1);
+  };
+
   return (
-    <div className={styles.container}>
+    <>
       {user ? (
-        <div className={styles.card}>
-          <h1 className={styles.title}>Welcome, {user.email}</h1>
-          <p className={styles.subtitle}>You are signed in.</p>
+        <>
+          {/* Header Navigation */}
+          <NavigationBar user={user} handleSignOut={handleSignOut} />
 
-          {/* Use the form class as a vertical stack for spacing */}
-          <div className={styles.form}>
-            <button
-              onClick={handleSignOut}
-              className={styles.button}
-              disabled={signingOut}
-            >
-              {signingOut ? "Signing out…" : "Sign out"}
-            </button>
+          {/* Main Layout */}
+          <div className={layoutStyles.mainLayout}>
+            {/* Left Sidebar */}
+            <aside className={layoutStyles.leftSidebar}>
+              <UserContainer user={user} />
+              <div className={layoutStyles.quickActions}>
+                <h3>Quick Actions</h3>
+                <ul>
+                  <li><a href="/jobs">Post Job/Service</a></li>
+                  <li><a href="/explore">Explore Jobs</a></li>
+                  <li><a href="/liked">Liked Jobs</a></li>
+                  <li><a href="/messages">Messages</a></li>
+                  <li><a href="/settings">Settings</a></li>
+                </ul>
+              </div>
+            </aside>
 
-            <Link href="/auth" className={styles.link}>
-              Go to dashboard
-            </Link>
+            {/* Main Feed */}
+            <main className={layoutStyles.mainFeed}>
+              <CreatePost user={user} onPost={handlePost} />
+              <UserPostsFeed username={user.email} key={feedKey} />
+            </main>
+
+            {/* Right Sidebar */}
+            <aside className={layoutStyles.rightSidebar}>
+              <div className={layoutStyles.suggestions}>
+                <h3>Suggestions for you</h3>
+                <div className={layoutStyles.suggestionItem}>
+                  <div className={layoutStyles.suggestionProfile}>
+                    <img src="/profile-default.png" alt="Profile" />
+                    <div>
+                      <h4>John Doe</h4>
+                      <p>Software Engineer</p>
+                    </div>
+                  </div>
+                  <button className={layoutStyles.connectBtn}>Connect</button>
+                </div>
+                <div className={layoutStyles.suggestionItem}>
+                  <div className={layoutStyles.suggestionProfile}>
+                    <img src="/profile-default.png" alt="Profile" />
+                    <div>
+                      <h4>Jane Smith</h4>
+                      <p>Product Manager</p>
+                    </div>
+                  </div>
+                  <button className={layoutStyles.connectBtn}>Connect</button>
+                </div>
+              </div>
+            </aside>
           </div>
-        </div>
+        </>
       ) : (
-        <div className={styles.card}>
-          <h1 className={styles.title}>Authentication</h1>
-          <p className={styles.subtitle}>Sign in or create an account</p>
-
-          {/* If these components already include container/card wrappers,
-              consider swapping them for “bare” versions or just show links. */}
-          <div className={styles.form}>
-          <Link href="/signin" className={styles.button} role="button">
-  Sign in
-</Link>
-<Link href="/signup" className={styles.button} role="button">
-  Sign up
-</Link>
-            {/* Or use one register flow only: */}
-            {/* <Register /> */}
-          </div>
-
-          {/* Alternatively, link to routes instead of embedding:
-          <div className={styles.form}>
-            <Link href="/signin" className={styles.link}>Go to Sign in</Link>
-            <Link href="/register" className={styles.link}>Create an account</Link>
-          </div> */}
-        </div>
+        <AuthContainer />
       )}
-    </div>
+    </>
   );
 }

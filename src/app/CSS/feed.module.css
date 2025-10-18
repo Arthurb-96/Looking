@@ -1,0 +1,104 @@
+.feedWrapper {
+  width: 100%;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.feedTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+  display: none; /* Hide title in new layout */
+}
+.loading {
+  color: #888;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.noPosts {
+  color: #888;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.postsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  width: 100%;
+}
+.postItem {
+  background: #fff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.postItem:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.postContent {
+  font-size: 1.08rem;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+.postDate {
+  font-size: 0.92rem;
+  color: #888;
+  text-align: right;
+}
+.addPostForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: flex-end;
+}
+.postInput {
+  width: 100%;
+  border-radius: 0.7rem;
+  border: 1px solid #cce6ff;
+  padding: 0.7rem 1rem;
+  font-size: 1.08rem;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+}
+.addPostButton {
+  background: #0a66c2;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.addPostButton:hover:not(:disabled) {
+  background: #084d91;
+}
+
+.addPostButton:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+@media (max-width: 600px) {
+  .feedWrapper {
+    min-width: 98vw;
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem;
+  }
+  .postItem {
+    padding: 0.7rem 0.5rem;
+  }
+}

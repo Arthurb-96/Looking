@@ -1,0 +1,153 @@
+.createPostWrapper {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  padding: 20px;
+  gap: 15px;
+  width: 100%;
+  margin: 0;
+  flex-direction: column;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+.profilePhoto {
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+.postInput {
+  flex: 1;
+  background: #f3f6f8;
+  color: #333;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 14px;
+  margin: 0;
+  outline: none;
+  width: 100%;
+}
+
+.postInput:focus {
+  background: #fff;
+  box-shadow: 0 0 0 2px #0a66c2;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.leftActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.liveVideo,
+.photoVideo,
+.feelingActivity {
+  background: #f3f6f8;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.liveVideo {
+  color: #e53935;
+}
+
+.photoVideo {
+  color: #43a047;
+}
+
+.feelingActivity {
+  color: #ffc107;
+}
+
+.liveVideo:hover,
+.photoVideo:hover,
+.feelingActivity:hover {
+  background: #e8f0fe;
+  transform: translateY(-1px);
+}
+
+.submitPost {
+  background: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.submitPost:hover:not(:disabled) {
+  background: #084d91;
+}
+
+.submitPost:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.iconLive {
+  width: 20px;
+  height: 20px;
+  background: url('/file.svg') no-repeat center center;
+  background-size: contain;
+  margin-right: 6px;
+}
+.photoVideo {
+  background: #f3f6f8;
+  color: #43a047;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+.iconPhoto {
+  width: 20px;
+  height: 20px;
+  background: url('/profile-default.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 6px;
+}
+.feelingActivity {
+  background: #f3f6f8;
+  color: #ffd600;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+.iconFeeling {
+  width: 20px;
+  height: 20px;
+  background: url('/window.svg') no-repeat center center;
+  background-size: contain;
+  margin-right: 6px;
+}

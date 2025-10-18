@@ -1,0 +1,434 @@
+/* Modern Social Media Layout */
+
+/* Navigation Bar */
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #e1e5e9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 60px;
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.navLink {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.navLink:hover {
+  background: #f3f6f8;
+  color: #0a66c2;
+}
+
+.navLink.active {
+  background: #e8f0fe;
+  color: #0a66c2;
+  font-weight: 600;
+}
+
+.logo {
+  color: #0a66c2;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  cursor: pointer;
+}
+
+.searchContainer {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  margin: 0 20px;
+}
+
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  background: #eef3f8;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 40px 10px 16px;
+  width: 100%;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  background: #fff;
+  box-shadow: 0 0 0 2px #0a66c2;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 12px;
+  color: #666;
+  pointer-events: none;
+}
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1001;
+  margin-top: 5px;
+}
+
+.searchLoading,
+.noResults {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s ease;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background: #f8f9fa;
+}
+
+.searchResultItem:last-child {
+  border-bottom: none;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #0a66c2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userName {
+  font-weight: 600;
+  color: #000;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.userEmail {
+  color: #666;
+  font-size: 12px;
+}
+
+.followBtn {
+  background: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.followBtn:hover:not(:disabled) {
+  background: #084d94;
+}
+
+.followBtn.following {
+  background: #dc3545;
+}
+
+.followBtn.following:hover {
+  background: #c82333;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.userGreeting {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.signOutBtn {
+  background: #0a66c2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.signOutBtn:hover {
+  background: #084d91;
+}
+
+/* Main Layout */
+.mainLayout {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  gap: 20px;
+  min-height: calc(100vh - 80px);
+}
+
+/* Left Sidebar */
+.leftSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.quickActions {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  padding: 20px;
+}
+
+.quickActions h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #000;
+}
+
+.quickActions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quickActions li {
+  margin-bottom: 8px;
+}
+
+.quickActions a {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.quickActions a:hover {
+  color: #0a66c2;
+}
+
+/* Main Feed */
+.mainFeed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Right Sidebar */
+.rightSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.suggestions {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e1e5e9;
+  padding: 20px;
+}
+
+.suggestions h3 {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  color: #000;
+}
+
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f6f8;
+}
+
+.suggestionItem:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.suggestionProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.suggestionProfile img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.suggestionProfile h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+}
+
+.suggestionProfile p {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.connectBtn {
+  background: #fff;
+  color: #0a66c2;
+  border: 1px solid #0a66c2;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.connectBtn:hover {
+  background: #0a66c2;
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainLayout {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+  
+  .leftSidebar,
+  .rightSidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navContainer {
+    padding: 0 15px;
+    flex-wrap: wrap;
+  }
+  
+  .navLeft {
+    gap: 15px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .searchContainer {
+    max-width: 200px;
+    margin: 0 10px;
+  }
+  
+  .navLinks {
+    gap: 2px;
+  }
+  
+  .searchInput {
+    font-size: 13px;
+    padding: 8px 35px 8px 12px;
+  }
+  
+  .searchResults {
+    left: -20px;
+    right: -20px;
+    max-height: 300px;
+  }
+  
+  .userAvatar {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .mainLayout {
+    padding: 15px;
+    margin-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchContainer {
+    max-width: 150px;
+  }
+  
+  .navRight {
+    gap: 10px;
+  }
+  
+  .userGreeting {
+    display: none; /* Hide greeting on very small screens */
+  }
+}
