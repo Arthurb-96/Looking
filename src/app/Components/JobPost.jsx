@@ -28,6 +28,7 @@ export default function JobPost() {
     }
 
     setPosting(true);
+    
     try {
       const response = await fetch(`/api/jobs`, {
         method: "POST",
@@ -47,13 +48,13 @@ export default function JobPost() {
         setServiceType("");
         setPriceRange("");
         setArea("");
-        // Redirect to main page after successful post
         router.push("/");
       } else {
         alert("Failed to post job");
       }
     } catch (error) {
-      alert("Error posting job");
+      console.error("Error posting job:", error);
+      alert("Failed to post job");
     } finally {
       setPosting(false);
     }

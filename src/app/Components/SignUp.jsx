@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../fireBaseDB";
 import styles from "../CSS/auth.module.css";
 
-function SignUp() {
+export default function SignUp() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +50,6 @@ function SignUp() {
       });
       alert("User registered successfully");
     } catch (error) {
-      console.log(error);
       setErr(error?.message ?? "Sign up failed");
     } finally {
       setLoading(false);
@@ -184,5 +183,5 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+
 

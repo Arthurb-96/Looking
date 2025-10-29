@@ -19,7 +19,7 @@ export default function Explore() {
   const [filters, setFilters] = useState({
     serviceType: "",
     priceRange: "",
-    area: "Tel Aviv" // Default to Tel Aviv for now
+    area: "Tel Aviv" 
   });
 
   useEffect(() => {
@@ -93,10 +93,10 @@ export default function Explore() {
           setCurrentJobIndex(prev => prev + 1);
         }
       } else {
-        console.error('Failed to save job preference');
+        console.error('failed to save job ');
       }
     } catch (error) {
-      console.error('Error saving job preference:', error);
+      console.error('error saving job :', error);
     }
   };
 
@@ -128,6 +128,7 @@ export default function Explore() {
   }
 
   return (
+    
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Explore Opportunities</h1>
@@ -145,6 +146,16 @@ export default function Explore() {
             onClick={() => setViewMode("offering")}
           >
             Find Services
+          </button>
+        </div>
+
+        {/* Advanced Search Link */}
+        <div className={styles.advancedSearchLink}>
+          <button 
+            className={styles.advancedSearchBtn}
+            onClick={() => window.open('/search', '_blank')}
+          >
+            🔍 Advanced Search (Users & Groups)
           </button>
         </div>
 

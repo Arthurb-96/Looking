@@ -38,11 +38,9 @@ export default function LikedJobs() {
       if (response.ok) {
         setLikedJobs(data.likedJobs || []);
       } else {
-        console.error("Failed to fetch liked jobs:", data.error);
         setLikedJobs([]);
       }
     } catch (error) {
-      console.error("Error fetching liked jobs:", error);
       setLikedJobs([]);
     } finally {
       setLoading(false);
@@ -62,7 +60,7 @@ export default function LikedJobs() {
   const removeLikedJob = async (jobId) => {
     if (!user) return;
     
-    try {
+    
       const response = await fetch('/api/jobs/like', {
         method: 'DELETE',
         headers: {
@@ -75,24 +73,18 @@ export default function LikedJobs() {
       });
 
       if (response.ok) {
-        // Remove from local state
         setLikedJobs(prev => prev.filter(job => job.jobId !== jobId));
         if (selectedJob && selectedJob.jobId === jobId) {
           closeModal();
         }
-      } else {
-        console.error('Failed to remove liked job');
       }
-    } catch (error) {
-      console.error('Error removing liked job:', error);
-    }
   };
 
   const openChat = (job) => {
     setChatRecipient(job.jobData.userEmail);
     setChatJobTitle(job.jobData.serviceType);
     setChatOpen(true);
-    closeModal(); // Close the modal when opening chat
+    closeModal(); 
   };
 
   const closeChat = () => {
@@ -165,7 +157,6 @@ export default function LikedJobs() {
         </div>
       )}
 
-      {/* Job Details Modal */}
       {showModal && selectedJob && (
         <div className={styles.modalOverlay} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>

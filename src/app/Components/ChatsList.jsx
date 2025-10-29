@@ -3,23 +3,26 @@
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../fireBaseDB";
-import Chat from "./Chat";
 import styles from "../CSS/chatsList.module.css";
 
 export default function ChatsList() {
   const [user, setUser] = useState(null);
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedChat, setSelectedChat] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return unsubscribe;
-  }, []);
+  },  []);
 
   useEffect(() => {
     if (user) {
       fetchChats();
+      
+      // tell navbar msgs are viewed
+      window.dispatchEvent(new CustomEvent('messagesRead', { 
+        detail: { userEmail: user.email } 
+      }));
     }
   }, [user]);
 
@@ -27,34 +30,30 @@ export default function ChatsList() {
     if (!user) return;
     
     setLoading(true);
-    try {
-      const response = await fetch(`/api/chat/list?userEmail=${encodeURIComponent(user.email)}`);
-      const data = await response.json();
-      
-      if (response.ok) {
-        setChats(data.chats || []);
-      } else {
-        console.error("Failed to fetch chats:", data.error);
-        setChats([]);
-      }
-    } catch (error) {
-      console.error("Error fetching chats:", error);
+    const response = await fetch(`/api/chat/list?userEmail=${encodeURIComponent(user.email)}`);
+    const data = await response.json();
+    
+    if (response.ok) {
+      setChats(data.chats || []);
+    } else {
       setChats([]);
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const openChat = (chat) => {
     const otherUser = chat.participants.find(p => p !== user.email);
-    setSelectedChat({
-      recipientEmail: otherUser,
-      jobTitle: chat.jobContext || "General Chat"
-    });
-  };
-
-  const closeChat = () => {
-    setSelectedChat(null);
+    
+    // Create a tab in the MessageNotifications component
+    window.dispatchEvent(new CustomEvent('openChatTab', { 
+      detail: { 
+        sender: otherUser,
+        jobTitle: chat.jobContext || "General Chat",
+        lastMessage: chat.lastMessage || "",
+        timestamp: new Date(chat.lastMessageTime || Date.now()),
+        unreadCount: 0 // Reset since user is opening it
+      } 
+    }));
   };
 
   if (!user) {
@@ -115,16 +114,6 @@ export default function ChatsList() {
             );
           })}
         </div>
-      )}
-
-      {/* Chat Component */}
-      {selectedChat && (
-        <Chat 
-          isOpen={!!selectedChat}
-          onClose={closeChat}
-          recipientEmail={selectedChat.recipientEmail}
-          jobTitle={selectedChat.jobTitle}
-        />
       )}
     </div>
   );

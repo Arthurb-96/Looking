@@ -39,7 +39,7 @@ export default function welcome() {
     }
   };
 
-  // Helper to post and refresh feed
+  // helper to post and refresh feed
   const [feedKey, setFeedKey] = useState(0);
   const handlePost = async (content) => {
     await fetch(`/user/${user.email}/posts`, {
@@ -54,12 +54,9 @@ export default function welcome() {
     <>
       {user ? (
         <>
-          {/* Header Navigation */}
           <NavigationBar user={user} handleSignOut={handleSignOut} />
 
-          {/* Main Layout */}
           <div className={layoutStyles.mainLayout}>
-            {/* Left Sidebar */}
             <aside className={layoutStyles.leftSidebar}>
               <UserContainer user={user} />
               <div className={layoutStyles.quickActions}>
@@ -74,39 +71,12 @@ export default function welcome() {
               </div>
             </aside>
 
-            {/* Main Feed */}
             <main className={layoutStyles.mainFeed}>
               <CreatePost user={user} onPost={handlePost} />
-              <UserPostsFeed username={user.email} key={feedKey} />
             </main>
 
-            {/* Right Sidebar */}
-            <aside className={layoutStyles.rightSidebar}>
-              <div className={layoutStyles.suggestions}>
-                <h3>Suggestions for you</h3>
-                <div className={layoutStyles.suggestionItem}>
-                  <div className={layoutStyles.suggestionProfile}>
-                    <img src="/profile-default.png" alt="Profile" />
-                    <div>
-                      <h4>John Doe</h4>
-                      <p>Software Engineer</p>
-                    </div>
-                  </div>
-                  <button className={layoutStyles.connectBtn}>Connect</button>
-                </div>
-                <div className={layoutStyles.suggestionItem}>
-                  <div className={layoutStyles.suggestionProfile}>
-                    <img src="/profile-default.png" alt="Profile" />
-                    <div>
-                      <h4>Jane Smith</h4>
-                      <p>Product Manager</p>
-                    </div>
-                  </div>
-                  <button className={layoutStyles.connectBtn}>Connect</button>
-                </div>
-              </div>
-            </aside>
           </div>
+          
         </>
       ) : (
         <AuthContainer />

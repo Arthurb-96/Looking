@@ -1,0 +1,498 @@
+/* Admin Settings Modal Styles */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  border-bottom: 1px solid #e1e5e9;
+  background: #f8f9fa;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.tabNavigation {
+  display: flex;
+  border-bottom: 1px solid #e1e5e9;
+  background: #f8f9fa;
+}
+
+.tab {
+  flex: 1;
+  padding: 16px 20px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.tab:hover {
+  background: rgba(0, 102, 204, 0.05);
+  color: #0066cc;
+}
+
+.tab.active {
+  background: white;
+  color: #0066cc;
+  border-bottom-color: #0066cc;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modalContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.tabContent {
+  padding: 32px;
+}
+
+.tabDescription {
+  color: #666;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.radioLabel:hover {
+  border-color: #0066cc;
+  background: #f8f9fa;
+}
+
+.radioLabel input[type="radio"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #0066cc;
+}
+
+.radioLabel span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Permissions Grid */
+.permissionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.permissionItem {
+  padding: 20px;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.permissionItem:hover {
+  border-color: #0066cc;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: #0066cc;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.permissionInfo {
+  flex: 1;
+}
+
+.permissionInfo strong {
+  display: block;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.permissionInfo p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Rules Section */
+.rulesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ruleItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ruleNumber {
+  width: 28px;
+  height: 28px;
+  background: #0066cc;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.ruleInput {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.ruleInput:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.removeRuleBtn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.removeRuleBtn:hover {
+  background: #c82333;
+}
+
+.addRuleBtn {
+  background: none;
+  border: 2px dashed #0066cc;
+  color: #0066cc;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.addRuleBtn:hover {
+  background: #0066cc;
+  color: white;
+}
+
+/* Danger Zone */
+.dangerZone {
+  background: #fff5f5;
+  border: 2px solid #fed7d7;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.dangerTitle {
+  color: #e53e3e;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.dangerDescription {
+  color: #744210;
+  margin: 0 0 24px 0;
+  font-size: 14px;
+}
+
+.dangerAction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+}
+
+.dangerInfo strong {
+  display: block;
+  color: #e53e3e;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.dangerInfo p {
+  margin: 0;
+  color: #744210;
+  font-size: 13px;
+}
+
+.deleteBtn {
+  background: #e53e3e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.deleteBtn:hover:not(:disabled) {
+  background: #c53030;
+}
+
+.deleteBtn:disabled {
+  background: #fed7d7;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px 32px;
+  border-top: 1px solid #e1e5e9;
+  background: #f8f9fa;
+}
+
+.cancelBtn,
+.saveBtn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 100px;
+}
+
+.cancelBtn {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e1e5e9;
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.saveBtn {
+  background: #0066cc;
+  color: white;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #0052a3;
+}
+
+.saveBtn:disabled,
+.cancelBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+  
+  .modal {
+    max-height: 95vh;
+    max-width: 100%;
+  }
+  
+  .modalHeader,
+  .tabContent,
+  .modalFooter {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .tabNavigation {
+    overflow-x: auto;
+  }
+  
+  .tab {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  .dangerAction {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .deleteBtn {
+    align-self: flex-end;
+  }
+  
+  .modalFooter {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .ruleItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .ruleNumber {
+    align-self: flex-start;
+  }
+  
+  .removeRuleBtn {
+    align-self: flex-end;
+  }
+  
+  .permissionItem {
+    padding: 16px;
+  }
+  
+  .checkboxLabel {
+    gap: 12px;
+  }
+}

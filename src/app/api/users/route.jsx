@@ -6,11 +6,11 @@ import getClient from "@/app/lib/mongodb"; // or use a relative path: "../../../
 
 export async function POST(req) {
   try {
-    const { email, name, displayName, phone, location, role, category, price } = await req.json();
+    const { email, name, displayName, phone, location, role, category, price, uid } = await req.json();
     
-    // Email and name are required, other fields are optional
-    if (!email || !name) {
-      return NextResponse.json({ error: "Email and name are required" }, { status: 400 });
+    // Email, name, and uid are required
+    if (!email || !name || !uid) {
+      return NextResponse.json({ error: "Email, name, and uid are required" }, { status: 400 });
     }
 
     const client = await getClient();
@@ -20,6 +20,7 @@ export async function POST(req) {
     await users.createIndex({ email: 1 }, { unique: true });
 
     const userData = {
+      uid,
       name,
       displayName: displayName || name,
       role: role || "user",

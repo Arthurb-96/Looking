@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
-import getClient from '../../../lib/mongodb';
+import { connectToDatabase } from '../../../lib/mongodb';
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('query');
     const currentUser = searchParams.get('currentUser');
+    const location = searchParams.get('location'); // New parameter
+    const category = searchParams.get('category'); // New parameter
+    const role = searchParams.get('role'); // New parameter
     
     if (!query || !currentUser) {
       return NextResponse.json(
@@ -14,13 +17,11 @@ export async function GET(request) {
       );
     }
 
-    const client = await getClient();
-    const db = client.db(process.env.MONGODB_DB || "myapp");
+    const { db } = await connectToDatabase();
     
-    // Search for users by display name primarily, then email as fallback (excluding current user)
+    // Build search criteria
     const searchRegex = new RegExp(query, 'i'); // Case-insensitive search
-    
-    const users = await db.collection('users').find({
+    const searchCriteria = {
       $and: [
         { email: { $ne: currentUser } }, // Exclude current user
         {
@@ -31,7 +32,24 @@ export async function GET(request) {
           ]
         }
       ]
-    }).limit(10).toArray();
+    };
+
+    // Add location filter if provided
+    if (location && location !== 'all') {
+      searchCriteria.$and.push({ location: location });
+    }
+
+    // Add category filter if provided
+    if (category && category !== 'all') {
+      searchCriteria.$and.push({ category: category });
+    }
+
+    // Add role filter if provided
+    if (role && role !== 'all') {
+      searchCriteria.$and.push({ role: role });
+    }
+    
+    const users = await db.collection('users').find(searchCriteria).limit(10).toArray();
 
     // Get follow relationships
     const followRelationships = await db.collection('follows').findOne({

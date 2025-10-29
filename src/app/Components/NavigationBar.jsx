@@ -11,8 +11,9 @@ export default function NavigationBar() {
   const [signingOut, setSigningOut] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [showSearchResults, setShowSearchResults] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
+  const [show_results, setShowSearchResults] = useState(false);
+  const [search_loading, setSearchLoading] = useState(false);
+  const [has_unread, setHasUnreadMessages] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchRef = useRef(null);
@@ -22,7 +23,52 @@ export default function NavigationBar() {
     return unsubscribe;
   }, []);
 
-  // Close search dropdown when clicking outside
+  // check for unread msgs
+  useEffect(() => {
+    if (user?.email && pathname !== '/messages') {
+      checkUnreadMessages();
+      const interval = setInterval(checkUnreadMessages, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user?.email, pathname]);
+
+  useEffect(() => {
+    if (pathname === '/messages') {
+      setHasUnreadMessages(false);
+    }
+  }, [pathname]);
+
+  // listen for new message events
+  useEffect(() => {
+    const handleNewMessage = (event) => {
+      if (pathname !== '/messages') {
+        setHasUnreadMessages(true);
+      }
+    };
+
+    const handleMessagesRead = () => {
+      setHasUnreadMessages(false);
+    };
+
+    window.addEventListener('newMessageReceived', handleNewMessage);
+    window.addEventListener('messagesRead', handleMessagesRead);
+    
+    return () => {
+      window.removeEventListener('newMessageReceived', handleNewMessage);
+      window.removeEventListener('messagesRead', handleMessagesRead);
+    };
+  }, [pathname]);
+
+  const checkUnreadMessages = async () => {
+    if (!user?.email || pathname === '/messages') return;
+    
+    const response = await fetch(`/api/chat/list?userEmail=${encodeURIComponent(user.email)}`);
+    if (response.ok) {
+      const data = await response.json();
+      setHasUnreadMessages(false);
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -66,37 +112,23 @@ export default function NavigationBar() {
   const searchUsers = async (query) => {
     if (!user) return;
     
-    console.log('Searching for users with query:', query);
     setSearchLoading(true);
-    try {
-      const url = `/api/users/search?query=${encodeURIComponent(query)}&currentUser=${encodeURIComponent(user.email)}`;
-      console.log('Search URL:', url);
-      
-      const response = await fetch(url);
-      const data = await response.json();
-      
-      console.log('Search response:', response.status, data);
-      
-      if (response.ok) {
-        setSearchResults(data.users || []);
-        setShowSearchResults(true);
-        console.log('Search results set:', data.users);
-      } else {
-        console.error("Failed to search users:", data.error);
-        setSearchResults([]);
-      }
-    } catch (error) {
-      console.error("Error searching users:", error);
+    const url = `/api/users/search?query=${encodeURIComponent(query)}&currentUser=${encodeURIComponent(user.email)}`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (response.ok) {
+      setSearchResults(data.users || []);
+      setShowSearchResults(true);
+    } else {
       setSearchResults([]);
-    } finally {
-      setSearchLoading(false);
     }
+    setSearchLoading(false);
   };
 
   const handleSearchInputChange = (e) => {
-    const value = e.target.value;
-    console.log('Search input changed:', value);
-    setSearchQuery(value);
+    setSearchQuery(e.target.value);
   };
 
   const handleUserClick = (userEmail) => {
@@ -105,13 +137,9 @@ export default function NavigationBar() {
     router.push(`/user/${encodeURIComponent(userEmail)}`);
   };
 
-  // Don't show navbar if user is not logged in (but show on all pages including home)
   if (!user) {
-    console.log('NavigationBar not shown - user not logged in');
     return null;
   }
-
-  console.log('NavigationBar rendering - pathname:', pathname, 'user:', user?.email);
 
   return (
     <nav className={styles.navbar}>
@@ -138,10 +166,9 @@ export default function NavigationBar() {
               <div className={styles.searchIcon}>🔍</div>
             </div>
             
-            {/* Search Results Dropdown */}
-            {showSearchResults && (
+            {show_results && (
               <div className={styles.searchResults}>
-                {searchLoading ? (
+                {search_loading ? (
                   <div className={styles.searchLoading}>Searching...</div>
                 ) : searchResults.length === 0 ? (
                   <div className={styles.noResults}>No users found</div>
@@ -182,6 +209,22 @@ export default function NavigationBar() {
               Explore
             </button>
             <button 
+              className={`${styles.navLink} ${pathname === "/groups" ? styles.active : ""}`}
+              onClick={() => navigateTo("/groups")}
+            >
+              Groups
+            </button>
+            <button 
+              className={`${styles.navLink} ${pathname === "/messages" ? styles.active : ""}`}
+              onClick={() => navigateTo("/messages")}
+              style={{ position: 'relative' }}
+            >
+              Messages
+              {has_unread && (
+                <span className={styles.notificationDot}></span>
+              )}
+            </button>
+            <button 
               className={`${styles.navLink} ${pathname === "/jobs" ? styles.active : ""}`}
               onClick={() => navigateTo("/jobs")}
             >
@@ -192,6 +235,12 @@ export default function NavigationBar() {
               onClick={() => navigateTo("/liked")}
             >
               Liked Jobs
+            </button>
+            <button 
+              className={`${styles.navLink} ${pathname === "/search" ? styles.active : ""}`}
+              onClick={() => navigateTo("/search")}
+            >
+              Advanced Search
             </button>
           </div>
         </div>
