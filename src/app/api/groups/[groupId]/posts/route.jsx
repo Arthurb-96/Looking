@@ -23,9 +23,17 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Group not found' }, { status: 404 });
     }
 
-    const isMember = group.members.some(
-      member => member.userId === userId && member.status === 'active'
-    );
+    // Find the user's MongoDB _id from their email
+    let isMember = false;
+    if (userId) {
+      const user = await db.collection('users').findOne({ email: userId });
+      if (user) {
+        const userMongoId = user._id.toString();
+        isMember = group.members.some(
+          member => member.userId === userMongoId && member.status === 'active'
+        );
+      }
+    }
 
     if (group.privacy === 'private' && !isMember) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });

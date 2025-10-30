@@ -71,7 +71,7 @@ export default function UserPostsFeed({ username }) {
       });
 
       if (res.ok) {
-        // Remove post from UI
+        // remove post
         setPosts(prev => prev.filter(post => post._id !== postId));
       } else {
         const errorData = await res.json();
@@ -126,18 +126,7 @@ export default function UserPostsFeed({ username }) {
           })}
         </ul>
       )}
-      <form onSubmit={handleAddPost} className={styles.addPostForm}>
-        <textarea
-          className={styles.postInput}
-          value={newPost}
-          onChange={(e) => setNewPost(e.target.value)}
-          placeholder="What's on your mind?"
-          rows={3}
-        />
-        <button type="submit" className={styles.addPostButton} disabled={posting || !newPost.trim()}>
-          Add a post
-        </button>
-      </form>
+      
     </div>
   );
 }

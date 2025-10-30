@@ -18,10 +18,18 @@ export async function GET(request) {
       query.category = category;
     }
     
-    if (userId && type === 'joined') {
-      query['members.userId'] = userId;
-    } else if (userId && type === 'created') {
-      query.adminId = userId;
+    // If userId is provided, convert email to MongoDB _id
+    if (userId && type) {
+      const user = await db.collection('users').findOne({ email: userId });
+      if (user) {
+        const userMongoId = user._id.toString();
+        
+        if (type === 'joined') {
+          query['members.userId'] = userMongoId;
+        } else if (type === 'created') {
+          query.adminId = userMongoId;
+        }
+      }
     }
     
     const groups = await db.collection('groups').find(query).toArray();

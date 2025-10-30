@@ -183,7 +183,7 @@ const Chat = ({ recipientEmail, jobTitle, onClose, isOpen = true, isMinimized = 
           <h4 className={styles.chatTitle}>
             Chat with {recipientEmail?.split('@')[0]}
           </h4>
-          {isConnected && (
+          {is_connected && (
             <span className={styles.connectionStatus}>🟢 Connected</span>
           )}
         </div>

@@ -73,6 +73,7 @@ export default function welcome() {
 
             <main className={layoutStyles.mainFeed}>
               <CreatePost user={user} onPost={handlePost} />
+              <UserPostsFeed key={feedKey} username={user.email} />
             </main>
 
           </div>
